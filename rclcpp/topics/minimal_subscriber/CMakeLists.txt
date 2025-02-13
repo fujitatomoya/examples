@@ -55,6 +55,11 @@ rclcpp_components_register_node(wait_set_subscriber_library
     PLUGIN "TimeTriggeredWaitSetSubscriber"
     EXECUTABLE time_triggered_wait_set_subscriber)
 
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 install(TARGETS
     wait_set_subscriber_library
     ARCHIVE DESTINATION lib

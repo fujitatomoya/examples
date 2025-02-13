@@ -17,6 +17,9 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
+#include <chrono>
+#include <ctime>
+
 class MinimalSubscriber : public rclcpp::Node
 {
 public:
@@ -25,7 +28,10 @@ public:
   {
     auto topic_callback =
       [this](std_msgs::msg::String::UniquePtr msg) -> void {
-        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+        auto now = std::chrono::system_clock::now();
+        std::time_t time =std::chrono::system_clock::to_time_t(now);
+        RCLCPP_INFO_STREAM_ONCE(this->get_logger(), std::ctime(&time));
+        RCLCPP_INFO_ONCE(this->get_logger(), "I heard: '%s'", msg->data.c_str());
       };
     subscription_ =
       this->create_subscription<std_msgs::msg::String>("topic", 10, topic_callback);

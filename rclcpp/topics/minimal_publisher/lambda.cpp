@@ -36,10 +36,9 @@ public:
       [this]() -> void {
         auto message = std_msgs::msg::String();
         message.data = "Hello, world! " + std::to_string(this->count_++);
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
         this->publisher_->publish(message);
       };
-    timer_ = this->create_wall_timer(500ms, timer_callback);
+    timer_ = this->create_wall_timer(25ms, timer_callback);
   }
 
 private:
